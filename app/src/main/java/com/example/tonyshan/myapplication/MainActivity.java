@@ -1,17 +1,29 @@
 package com.example.tonyshan.myapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.Toast;
+
+import java.util.ServiceConfigurationError;
 
 /**
  * メイン画面
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+
+    static final String TAG="MainActivity";
+
+    private Button BUTTON_RECORD;
+    private Button BUTTON_RECORDPLAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,18 +31,46 @@ public class MainActivity extends ActionBarActivity {
         // メイン画面のレイアウトを設定
         setContentView(R.layout.activity_main);
 
-    Button VideoListButton = (Button)findViewById(R.id.button2);
+    BUTTON_RECORD = (Button)findViewById(R.id.button1);
+
+    BUTTON_RECORDPLAY = (Button)findViewById(R.id.button2);
     // ボタンをクリックのイベント
-    VideoListButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-           // 画面を遷移
-           Intent intent = new Intent();
+    BUTTON_RECORD.setOnClickListener(this);
+    BUTTON_RECORDPLAY.setOnClickListener(this);
+
+        Log.i(TAG,"onCreate");
+    }
+
+    /**
+     * クリックイベント
+     * @param v View
+     */
+    @Override
+    public void onClick(View v) {
+        if ( v == BUTTON_RECORD) {
+            startService(new Intent(MainActivity.this,MyServices.class));
+            finish();
+            //Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
+        } else if ( v== BUTTON_RECORDPLAY) {
+            // Services停止
+            stopService(new Intent(MainActivity.this,MyServices.class));
+            // 画面を遷移
+            Intent intent = new Intent();
             intent.setClass(MainActivity.this,SubActivity.class);
             startActivity(intent);
+        } else {
+            Toast.makeText(this,"Unknown Button",Toast.LENGTH_SHORT).show();
         }
-    });
+
+        HomeButtonReceive mHomeButtonReceive = new HomeButtonReceive();
+
+        IntentFilter iFilter = new IntentFilter();
+
+        iFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        this.registerReceiver(mHomeButtonReceive, iFilter);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,5 +92,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public class HomeButtonReceive extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context arg0, Intent arg1) {
+            Toast.makeText(getApplicationContext(),"HomeButton pushed!",Toast.LENGTH_SHORT).show();
+
+        }
     }
 }

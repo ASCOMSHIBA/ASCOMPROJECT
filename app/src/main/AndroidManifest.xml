@@ -20,6 +20,8 @@
         <activity android:name=".SubActivity" />
         <activity android:name=".ThirdActivity" />
 
+        <service android:name=".MyServices"/>
+
     </application>
 
 </manifest>

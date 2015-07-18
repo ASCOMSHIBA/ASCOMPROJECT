@@ -44,9 +44,6 @@ public class VideoAdapter extends BaseAdapter{
     @Override
     public View getView(int position,View convertView,ViewGroup parent){
 
-
-
-
         if (convertView == null){
 
             convertView = this.mInflater.inflate(R.layout.sample_row,parent,false);
@@ -81,8 +78,5 @@ public class VideoAdapter extends BaseAdapter{
     public long getItemId(int position){
         return position;
     }
-
-
-
 
 }
