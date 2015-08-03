@@ -21,8 +21,13 @@ import java.util.ServiceConfigurationError;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
 
     static final String TAG="MainActivity";
-
+    /**
+     * 画面を録画するボタン
+     */
     private Button BUTTON_RECORD;
+    /**
+     * 画面を再生するボタン
+     */
     private Button BUTTON_RECORDPLAY;
 
     @Override
