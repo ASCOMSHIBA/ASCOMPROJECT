@@ -19,7 +19,9 @@ public class VideoAdapter extends BaseAdapter{
      * listViewのLayoutInflater
      */
     private final LayoutInflater mInflater;
-
+    /**
+     * ImageView
+     */
     private ImageView imageView;
 
     private TextView textView;
