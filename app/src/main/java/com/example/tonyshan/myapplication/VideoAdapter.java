@@ -15,16 +15,18 @@ import java.util.List;
  * ビデオアダプター
  */
 public class VideoAdapter extends BaseAdapter{
+    /**
+     * listViewのLayoutInflater
+     */
+    private final LayoutInflater mInflater;
 
-    LayoutInflater mInflater;
+    private ImageView imageView;
 
-    ImageView imageView;
+    private TextView textView;
 
-    TextView textView;
+    private Context context;
 
-    Context context;
-
-    List<VideoData> list;
+    private List<VideoData> list;
 
     /**
      * コンストラクタ
